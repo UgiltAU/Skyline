@@ -8,7 +8,7 @@ public class Skyline {
         sky = line;
     }
 
-    public ArrayList<Integer> mergeSkylines(ArrayList<Integer> sky, ArrayList<Integer> sky2) {
+    public static ArrayList<Integer> mergeSkylines(ArrayList<Integer> sky, ArrayList<Integer> sky2) {
         ArrayList<Integer> result = new ArrayList<>();
         int currHBlue = 0;
         int currHGreen = 0;
@@ -56,7 +56,18 @@ public class Skyline {
         return result;
     }
 
-    
+    public static ArrayList<Integer> skylineFromBoxes(ArrayList<ArrayList<Integer>> listOfBoxes) {
+        if (listOfBoxes.size() == 2) {
+            return mergeSkylines(listOfBoxes.get(0),listOfBoxes.get(1));
+        }
+        if (listOfBoxes.size() == 1) {
+            return listOfBoxes.get(0);
+        }
+        int splitpoint = listOfBoxes.size()/2;
+        ArrayList<ArrayList<Integer>> leftSide = new ArrayList<>(listOfBoxes.subList(0,splitpoint));
+        ArrayList<ArrayList<Integer>> rightSide = new ArrayList<>(listOfBoxes.subList(splitpoint, listOfBoxes.size()));
+        return mergeSkylines(skylineFromBoxes(leftSide), skylineFromBoxes(rightSide));
+    }
 
 
     public String toString() {
